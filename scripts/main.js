@@ -4,8 +4,13 @@ var settings = {
   url: '',
   method: 'GET'
 }
+var gitHubUser = new GitHubUser()
+var token = `?access_token=dc7f35532e9aea0ef71e2ab80e77e64d50674c7c`
+var username
 $(document).ready(function (){
+
   $('#get-username').on('submit', function (event) {
+    event.preventDefault()
     getUsername()
   })
 })
