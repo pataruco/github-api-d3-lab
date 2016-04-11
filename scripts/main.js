@@ -4,6 +4,7 @@ var settings = {
   url: '',
   method: 'GET'
 }
+
 var gitHubUser = new GitHubUser()
 var token = `?access_token=dc7f35532e9aea0ef71e2ab80e77e64d50674c7c`
 var username
@@ -17,16 +18,37 @@ $(document).ready(function (){
 
   $('#get-username').on('submit', function (event) {
     event.preventDefault()
+    pageTwo.toggleClass('on')
     getUsername()
+    scroll($('#page-2'))
+  })
+
   renderChartButton.on('click', function (){
     pageThree.toggleClass('on')
     footer.toggleClass('on')
     renderChart()
     scroll(chart)
   })
+
+  $('#button-top').on('click', function () {
+    gitHubUser.languageData = { JavaScript: 0 }
+    setTimeout(function(){
+      pageTwo.toggleClass('on')
+      pageThree.toggleClass('on')
+      footer.toggleClass('on')
+    }, 2000)
   })
 })
+
+function scroll(to){
+  $('html, body').animate({
+      scrollTop: to.offset().top
+  }, 2000)
+}
+
 function getUsername (event){
+  chart.empty()
+
   username = $('#get-username input[name="username"]').val()
   getUserData(username)
 }
@@ -189,3 +211,15 @@ function sumData (data) {
   return d3.sum(values)
 }
 
+$('a[href*="#"]:not([href="#"])').click(function() {
+  if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+    var target = $(this.hash)
+    target = target.length ? target : $('[name=' + this.hash.slice(1) +']')
+    if (target.length) {
+      $('html, body').animate({
+        scrollTop: target.offset().top
+      }, 1000)
+      return false
+    }
+  }
+})
