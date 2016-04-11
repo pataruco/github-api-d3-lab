@@ -21,3 +21,12 @@ function getUserData (username) {
     getRepoData(username)
   })
 }
+function getRepoData (username) {
+  settings.url = `https://api.github.com/users/${username}/repos${token}`
+
+  $.ajax(settings).done(function (reposData) {
+    reposData.forEach(function( repoData ) {
+      getLanguageData( repoData.name )
+    })
+  })
+}
