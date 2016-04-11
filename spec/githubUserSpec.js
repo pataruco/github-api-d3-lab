@@ -29,4 +29,10 @@ describe('GitHubUser', function () {
     expect(gitHubUser.imageUrl()).toBe('https://avatars.githubusercontent.com/u/10330222?v=3')
     done()
   })
+
+  it("return name of user", function (done) {
+    expect(gitHubUser.name()).toBeDefined()
+    expect(gitHubUser.name()).toBe('Pedro Martin')
+    done()
+  })
 })  // End of GitHubUser
