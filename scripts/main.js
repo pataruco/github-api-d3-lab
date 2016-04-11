@@ -30,3 +30,12 @@ function getRepoData (username) {
     })
   })
 }
+
+function getLanguageData (repoData) {
+  settings.url = `https://api.github.com/repos/${username}/${repoData}/languages${token}`
+
+  $.ajax(settings).done(function (languageData) {
+    gitHubUser.addLanguage(languageData)
+  })
+}
+}
