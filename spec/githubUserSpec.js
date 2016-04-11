@@ -35,4 +35,11 @@ describe('GitHubUser', function () {
     expect(gitHubUser.name()).toBe('Pedro Martin')
     done()
   })
+
+  it("return user page URL", function (done) {
+    expect(gitHubUser.pageUrl()).toBeDefined()
+    expect(gitHubUser.pageUrl()).toBe('https://github.com/pataruco')
+    done()
+  });
+}); // End of GitHub API user data
 })  // End of GitHubUser
