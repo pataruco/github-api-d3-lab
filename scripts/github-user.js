@@ -26,4 +26,21 @@ GitHubUser.prototype.languages = function () {
   return this.languageData = this.languageData || { JavaScript: 0 }
 }
 
+GitHubUser.prototype.addLanguage = function (language) {
+  this.languages()
+
+  for (var languageKey in language) {
+    for (var languagesKey in this.languageData) {
+      if (language.hasOwnProperty(languageKey)) {
+        if (this.languageData.hasOwnProperty(languagesKey)) {
+          if (Object.keys(this.languageData).indexOf(languageKey) !== -1) {
+            this.languageData[languagesKey] += language[languageKey]
+          } else {
+            this.languageData[languageKey] = language[languageKey]
+          }
+        }
+      }
+    }
+  }
+}
 module.exports = GitHubUser
