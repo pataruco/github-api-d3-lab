@@ -52,4 +52,15 @@ describe('GitHubUser', function () {
       done();
     });
   });// End of GiHub API user repo language data
+
+  describe("and add another GiHub API user repo language data ", function () {
+
+    it("return a list of languages", function (done) {
+      gitHubUser.addLanguage( { JavaScript: 162753, CSS: 3595 });
+      gitHubUser.addLanguage( { JavaScript: 129967, CSS: 4703, HTML: 4523 });
+
+      expect(gitHubUser.languages()).toEqual( { JavaScript: 463771, CSS: 309136, HTML: 4523 } );
+      done();
+    });
+  });// End of GiHub API user repo language data
 })  // End of GitHubUser
