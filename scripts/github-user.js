@@ -13,4 +13,8 @@ GitHubUser.prototype.username = function () {
 GitHubUser.prototype.imageUrl = function () {
   return this.userNameData.avatar_url
 }
+
+GitHubUser.prototype.name = function () {
+  return this.userNameData.name
+}
 module.exports = GitHubUser
