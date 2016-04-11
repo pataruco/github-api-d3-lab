@@ -23,4 +23,10 @@ describe('GitHubUser', function () {
     expect(gitHubUser.username()).toBe('pataruco')
     done()
   })
+
+  it("return an image URL", function (done) {
+    expect(gitHubUser.imageUrl()).toBeDefined()
+    expect(gitHubUser.imageUrl()).toBe('https://avatars.githubusercontent.com/u/10330222?v=3')
+    done()
+  })
 })  // End of GitHubUser
