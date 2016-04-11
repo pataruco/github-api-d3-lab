@@ -1,4 +1,3 @@
-var GitHubUser = require('../scripts/github-user.js')
 var GitHubUser = require('../scripts/github-user.js'),
       userData = require('./gitHubUserData.js')
 
