@@ -1,0 +1,23 @@
+{
+  "name": "github-api-d3-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pataruco/github-api-d3-lab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pataruco/github-api-d3-lab/issues"
+  },
+  "homepage": "https://github.com/pataruco/github-api-d3-lab#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
+}
