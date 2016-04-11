@@ -22,4 +22,8 @@ GitHubUser.prototype.pageUrl = function () {
   return this.userNameData.html_url
 }
 
+GitHubUser.prototype.languages = function () {
+  return this.languageData = this.languageData || { JavaScript: 0 }
+}
+
 module.exports = GitHubUser
