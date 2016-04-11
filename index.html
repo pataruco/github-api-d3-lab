@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./styles/css/style.css" media="screen" title="no title" charset="utf-8">
+    <title>What languages do you speak?</title>
+  </head>
+  <body>
+    <main>
+
+      <section class="page page-1" id="top">
+        <h1>What languages do you speak?</h1>
+        <form id="get-username" class="" action="/" method="post" formenctype="multipart/form-data">
+          <input type="text" name="username" placeholder="Enter GitHub username">
+          <input type="submit" name="Submit">
+        </form>
+      </section>
+
+      <section class="page page-2" id="page-2">
+        <div class="img-wrapper">
+          <img src="" alt="" id="user-image">
+        </div>
+        <h2 id="user"></h2>
+        <h1>Speaks?</h1>
+        <a href="#page-3" id="render-chart-button">Click to know</a>
+      </section>
+
+      <section class="page page-3 cf" id="page-3">
+        <div id="chart" class="chart"></div>
+      </section>
+      
+    </main>
+
+    <footer class="cf" id="footer">
+      <a href="#top" id="button-top">Top</a>
+    </footer>
+
+  </body>
+  <script src="./scripts/d3.js" charset="utf-8"></script>
+  <script src="./scripts/jquery.js" charset="utf-8"></script>
+  <script src="./scripts/github-user.js" charset="utf-8"></script>
+  <script src="./scripts/main.js" charset="utf-8"></script>
+</html>
