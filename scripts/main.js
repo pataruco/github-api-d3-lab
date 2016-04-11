@@ -7,17 +7,30 @@ var settings = {
 var gitHubUser = new GitHubUser()
 var token = `?access_token=dc7f35532e9aea0ef71e2ab80e77e64d50674c7c`
 var username
+var renderChartButton = $('#render-chart-button')
+var chart = $('#chart')
+var pageTwo = $('#page-2')
+var pageThree = $('#page-3')
+var footer = $('#footer')
+
 $(document).ready(function (){
 
   $('#get-username').on('submit', function (event) {
     event.preventDefault()
     getUsername()
+  renderChartButton.on('click', function (){
+    pageThree.toggleClass('on')
+    footer.toggleClass('on')
+    renderChart()
+    scroll(chart)
+  })
   })
 })
 function getUsername (event){
   username = $('#get-username input[name="username"]').val()
   getUserData(username)
 }
+
 function getUserData (username) {
   settings.url = `https://api.github.com/users/${username}${token}`
 
@@ -26,6 +39,7 @@ function getUserData (username) {
     getRepoData(username)
   })
 }
+
 function getRepoData (username) {
   settings.url = `https://api.github.com/users/${username}/repos${token}`
 
@@ -34,6 +48,7 @@ function getRepoData (username) {
       getLanguageData( repoData.name )
     })
   })
+  renderUser()
 }
 
 function getLanguageData (repoData) {
@@ -43,4 +58,10 @@ function getLanguageData (repoData) {
     gitHubUser.addLanguage(languageData)
   })
 }
+
+function renderUser () {
+  let name = gitHubUser.name()
+  $('#user-image').attr('src', gitHubUser.imageUrl()).attr('alt', name )
+  $('#user').text(name)
+  $('#username').text(gitHubUser.username())
 }
