@@ -1,45 +1,66 @@
+//variables
 var settings = {
   async: true,
   crossDomain: true,
   url: '',
   method: 'GET'
 }
-
 var gitHubUser = new GitHubUser()
 var token = `?access_token=dc7f35532e9aea0ef71e2ab80e77e64d50674c7c`
 var username
-var renderChartButton = $('#render-chart-button')
-var chart = $('#chart')
-var pageTwo = $('#page-2')
-var pageThree = $('#page-3')
-var footer = $('#footer')
+var $renderChartButton = $('#render-chart-button')
+var $chart = $('#chart')
+var $pageTwo = $('#page-2')
+var $pageThree = $('#page-3')
+var $footer = $('#footer')
+var $userImage = $('#user-image')
+var $nameOfUser = $('#user')
+var $userName = $('#username')
+var $buttonTop = $('#button-top')
+var $buttonTopWrapper = $('#button-top-wrapper')
+var $top = $('#top')
+var $newButtonTop
 
+//Event listeners
 $(document).ready(function (){
+
+  $(window).on('load', function(){
+    $pageTwo.hide()
+    $pageThree.hide()
+    $footer.hide()
+  })
 
   $('#get-username').on('submit', function (event) {
     event.preventDefault()
-    pageTwo.toggleClass('on')
+    $pageTwo.show()
     getUsername()
     scroll($('#page-2'))
   })
 
-  renderChartButton.on('click', function (){
-    pageThree.toggleClass('on')
-    footer.toggleClass('on')
+  $renderChartButton.on('click', function (event){
+    event.preventDefault()
     renderChart()
-    scroll(chart)
+    $pageThree.show()
+    $footer.show()
+    $buttonTop.show()
+    setTimeout(scroll($chart), 2000)
   })
 
-  $('#button-top').on('click', function () {
+  $buttonTop.on('click', function (event) {
+    event.preventDefault()
+    scroll($top)
     gitHubUser.languageData = { JavaScript: 0 }
     setTimeout(function(){
-      pageTwo.toggleClass('on')
-      pageThree.toggleClass('on')
-      footer.toggleClass('on')
+      $pageTwo.hide()
+      $pageThree.hide()
+      $footer.hide()
+      $buttonTopWrapper.hide()
+      $renderChartButton.show()
     }, 2000)
   })
 })
 
+//methods
 function scroll(to){
   $('html, body').animate({
       scrollTop: to.offset().top
@@ -47,7 +68,7 @@ function scroll(to){
 }
 
 function getUsername (event){
-  chart.empty()
+  $chart.empty()
 
   username = $('#get-username input[name="username"]').val()
   getUserData(username)
@@ -56,7 +77,9 @@ function getUsername (event){
 function getUserData (username) {
   settings.url = `https://api.github.com/users/${username}${token}`
 
-  $.ajax(settings).done(function (userData) {
+  $.ajax(settings).fail(function(error){
+    renderUserError(error)
+  }).done(function (userData) {
     gitHubUser.init(userData)
     getRepoData(username)
   })
@@ -83,12 +106,37 @@ function getLanguageData (repoData) {
 
 function renderUser () {
   let name = gitHubUser.name()
-  $('#user-image').attr('src', gitHubUser.imageUrl()).attr('alt', name )
-  $('#user').text(name)
-  $('#username').text(gitHubUser.username())
+  $userImage.attr('src', gitHubUser.imageUrl()).attr('alt', name )
+  $nameOfUser.text(name)
+  $userName.text(`@${gitHubUser.username()}`)
+  $renderChartButton.show()
+  $pageTwo.children('h1').show()
+}
+
+function renderUserError(error) {
+  $userImage.attr('src', 'http://pataruco.s3.amazonaws.com/ga/github-d3-lab/404.png')
+  $nameOfUser.text(error.status)
+  $userName.text(error.statusText)
+  $renderChartButton.hide()
+  $pageTwo.children('h1').hide()
+  $pageTwo.css('height', '80vh')
+  $newButtonTop = $buttonTop.clone()
+  $buttonTopWrapper.show().append($newButtonTop)
+  $newButtonTop.on('click', errorScroll)
+  $pageThree.hide()
+}
+
+function errorScroll(event){
+  event.preventDefault()
+  scroll($top)
+  setTimeout(function(){
+    $newButtonTop.hide()
+    $pageTwo.hide()
+  }, 2000)
 }
 
 function renderChart () {
+
   let data = gitHubUser.data(),
       w = 400,
       h = 400,
@@ -210,16 +258,3 @@ function sumData (data) {
   })
   return d3.sum(values)
 }
-
-$('a[href*="#"]:not([href="#"])').click(function() {
-  if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-    var target = $(this.hash)
-    target = target.length ? target : $('[name=' + this.hash.slice(1) +']')
-    if (target.length) {
-      $('html, body').animate({
-        scrollTop: target.offset().top
-      }, 1000)
-      return false
-    }
-  }
-})
