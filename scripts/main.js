@@ -14,6 +14,18 @@ var pageTwo = $('#page-2')
 var pageThree = $('#page-3')
 var footer = $('#footer')
 
+var $renderChartButton = $('#render-chart-button')
+var $chart = $('#chart')
+var $pageTwo = $('#page-2')
+var $pageThree = $('#page-3')
+var $footer = $('#footer')
+var $userImage = $('#user-image')
+var $nameOfUser = $('#user')
+var $userName = $('#username')
+var $buttonTop = $('#button-top')
+var $buttonTopWrapper = $('#button-top-wrapper')
+var $top = $('#top')
+var $newButtonTop
 $(document).ready(function (){
 
   $('#get-username').on('submit', function (event) {
