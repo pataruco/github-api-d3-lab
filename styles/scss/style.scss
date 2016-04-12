@@ -61,10 +61,8 @@
 }
 
 .page-2 {
-  display:none;
-  &.on{
-    @include flexCenter;
-  }
+  @include flexCenter;
+
   img {
     width: 100%;
     height: auto;
@@ -75,7 +73,7 @@
     width: calc(100% /8);
   }
 
-  a {
+  .render-chart-button {
     @include button;
     line-height: 2.3em;
     text-align: center;
@@ -84,28 +82,18 @@
 }
 
 .page-3 {
-  display:none;
-  &.on{
-    @include flexCenter;
-  }
+  @include flexCenter;
   height: 80vh;
 }
 
-
-footer {
-  display:none;
-  &.on{
-    display: block;
-  }
-  a {
-    @include button;
-    line-height: 2.3em;
-    text-align: center;
-    text-decoration: none;
-    float: right;
-    width: 9em;
-    margin: 0 2em 2em 0;
-  }
+.button-top {
+  @include button;
+  line-height: 2.3em;
+  text-align: center;
+  text-decoration: none;
+  float: right;
+  width: 9em;
+  margin: 0 2em 2em 0;
 }
 
 .cf:before,

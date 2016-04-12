@@ -398,19 +398,17 @@ textarea {
       -webkit-box-shadow: 0 0 0px 1000px white inset; }
 
 .page-2 {
-  display: none; }
-  .page-2.on {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
   .page-2 img {
     width: 100%;
     height: auto;
     border-radius: 3%; }
   .page-2 .img-wrapper {
     width: calc(100% /8); }
-  .page-2 a {
+  .page-2 .render-chart-button {
     display: block;
     height: 2.3em;
     width: 18.4em;
@@ -421,48 +419,42 @@ textarea {
     line-height: 2.3em;
     text-align: center;
     text-decoration: none; }
-    .page-2 a:hover {
+    .page-2 .render-chart-button:hover {
       background-color: white;
       color: black;
       border-color: black; }
-    .page-2 a:active {
+    .page-2 .render-chart-button:active {
       background-color: black;
       color: white; }
 
 .page-3 {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 80vh; }
-  .page-3.on {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
 
-footer {
-  display: none; }
-  footer.on {
-    display: block; }
-  footer a {
-    display: block;
-    height: 2.3em;
-    width: 18.4em;
-    border: 1px solid transparent;
+.button-top {
+  display: block;
+  height: 2.3em;
+  width: 18.4em;
+  border: 1px solid transparent;
+  background-color: black;
+  color: white;
+  margin-top: 1rem;
+  line-height: 2.3em;
+  text-align: center;
+  text-decoration: none;
+  float: right;
+  width: 9em;
+  margin: 0 2em 2em 0; }
+  .button-top:hover {
+    background-color: white;
+    color: black;
+    border-color: black; }
+  .button-top:active {
     background-color: black;
-    color: white;
-    margin-top: 1rem;
-    line-height: 2.3em;
-    text-align: center;
-    text-decoration: none;
-    float: right;
-    width: 9em;
-    margin: 0 2em 2em 0; }
-    footer a:hover {
-      background-color: white;
-      color: black;
-      border-color: black; }
-    footer a:active {
-      background-color: black;
-      color: white; }
+    color: white; }
 
 .cf:before,
 .cf:after {
