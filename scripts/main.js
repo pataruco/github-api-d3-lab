@@ -89,6 +89,26 @@ function renderUser () {
   $('#user-image').attr('src', gitHubUser.imageUrl()).attr('alt', name )
   $('#user').text(name)
   $('#username').text(gitHubUser.username())
+function renderUserError(error) {
+  $userImage.attr('src', 'http://pataruco.s3.amazonaws.com/ga/github-d3-lab/404.png')
+  $nameOfUser.text(error.status)
+  $userName.text(error.statusText)
+  $renderChartButton.hide()
+  $pageTwo.children('h1').hide()
+  $pageTwo.css('height', '80vh')
+  $newButtonTop = $buttonTop.clone()
+  $buttonTopWrapper.show().append($newButtonTop)
+  $newButtonTop.on('click', errorScroll)
+  $pageThree.hide()
+}
+
+function errorScroll(event){
+  event.preventDefault()
+  scroll($top)
+  setTimeout(function(){
+    $newButtonTop.hide()
+    $pageTwo.hide()
+  }, 2000)
 }
 
 function renderChart () {
