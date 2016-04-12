@@ -57,6 +57,9 @@ function getUserData (username) {
   settings.url = `https://api.github.com/users/${username}${token}`
 
   $.ajax(settings).done(function (userData) {
+  $.ajax(settings).fail(function(error){
+    renderUserError(error)
+  }).done(function (userData) {
     gitHubUser.init(userData)
     getRepoData(username)
   })
