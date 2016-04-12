@@ -106,6 +106,7 @@ function getLanguageData (repoData) {
 
 function renderUser () {
   let name = gitHubUser.name()
+  $pageTwo.css('height', '100vh')
   $userImage.attr('src', gitHubUser.imageUrl()).attr('alt', name )
   $nameOfUser.text(name)
   $userName.text(`@${gitHubUser.username()}`)
