@@ -2,8 +2,11 @@ import path from 'path';
 import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const entry = path.resolve('./src/index.ts');
+const favicon = path.resolve('./src/assets/favicon/icon.svg');
 
 const config: webpack.Configuration = {
   entry,
@@ -37,6 +40,7 @@ const config: webpack.Configuration = {
       chunkFilename: '[name].css',
     }),
     // new FaviconsWebpackPlugin(favicon),
+    new CleanWebpackPlugin(),
   ],
 };
 
