@@ -157,28 +157,22 @@ export const reduceLanguages = async (
   const languages = rawLanguages.filter(
     (language) => Object.keys(language).length > 0,
   );
-  return languages.reduce(
-    // @ts-expect-error
-    (acc, language, i) => {
-      if (Object.keys(languages).length > 0) {
-        return Object.entries(language).forEach(([key, value]) => {
-          console.log({ acc, type: typeof acc, key, value, language, i });
 
-          if (key in acc) {
-            return {
-              ...acc,
-              [key]: acc[key] + value,
-            };
-          } else {
-            //   ...acc,
-            // return {
-            //   [key]: value,
-            // };
-            return Object.assign(acc, { [key]: value });
-          }
-        });
+  return languages.reduce((acc, language, i) => {
+    Object.entries(language).forEach(([key, value]) => {
+      if (key in acc) {
+        acc = {
+          ...acc,
+          // @ts-expect-error
+          [key]: acc[key] + value,
+        };
+      } else {
+        acc = {
+          ...acc,
+          [key]: value,
+        };
       }
-    },
-    { HTML: 0 } as { [key: string]: number },
-  );
+    });
+    return acc;
+  }, {} as LanguagesPerRepo);
 };
