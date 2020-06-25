@@ -4,3 +4,5 @@ import './styles/main.css';
 // JS
 
 import './scripts/form';
+
+import { getByUsername } from './scripts/github';
