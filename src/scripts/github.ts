@@ -150,29 +150,29 @@ export const getAllLanguagesByUser = async (
   );
 };
 
-export const reduceLanguages = async (
+const sumLanguages = (total: LanguagesPerRepo, language: LanguagesPerRepo) => {
+  Object.entries(language).forEach(([key, value]) => {
+    if (key in total) {
+      total = {
+        ...total,
+        // @ts-expect-error
+        [key]: total[key] + value,
+      };
+    } else {
+      total = {
+        ...total,
+        [key]: value,
+      };
+    }
+  });
+  return total;
+};
+
+export const getAllLanguagesSumByUser = async (
   user: string,
 ): Promise<LanguagesPerRepo> => {
-  const rawLanguages = await getAllLanguagesByUser(user);
-  const languages = rawLanguages.filter(
-    (language) => Object.keys(language).length > 0,
-  );
-
-  return languages.reduce((acc, language, i) => {
-    Object.entries(language).forEach(([key, value]) => {
-      if (key in acc) {
-        acc = {
-          ...acc,
-          // @ts-expect-error
-          [key]: acc[key] + value,
-        };
-      } else {
-        acc = {
-          ...acc,
-          [key]: value,
-        };
-      }
-    });
-    return acc;
-  }, {} as LanguagesPerRepo);
+  const languages = await getAllLanguagesByUser(user);
+  return languages
+    .filter((language) => Object.keys(language).length > 0)
+    .reduce(sumLanguages, {} as LanguagesPerRepo);
 };
