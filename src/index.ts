@@ -4,6 +4,7 @@ import './styles/main.css';
 // JS
 
 import './scripts/form';
+import './scripts/d3';
 
 import {
   getByUsername,
@@ -14,6 +15,6 @@ import {
   getAllLanguagesSumByUser,
 } from './scripts/github';
 
-const languages = getAllLanguagesSumByUser('pataruco');
+// const languages = getAllLanguagesSumByUser('pataruco');
 
-languages.then((data) => console.log({ data }));
+// languages.then((data) => console.log({ data }));
