@@ -14,12 +14,6 @@ import {
   getAllLanguagesSumByUser,
 } from './scripts/github';
 
-// const token = getToken();
-// token.then((data) => console.log(data));
-
-// const repos = getReposByUsername('pataruco');
-// repos.then((data) => console.log({ data }));
-
 const languages = getAllLanguagesSumByUser('pataruco');
 
-languages.then((data) => console.log(data));
+languages.then((data) => console.log({ data }));
