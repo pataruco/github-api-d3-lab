@@ -1,6 +1,6 @@
 // CSS
 import 'normalize.css';
-import './styles/main.css';
+import './styles/index.css';
 // JS
 
 import './scripts/form';
