@@ -1,36 +1,19 @@
 import * as d3 from 'd3';
 import { LanguagesPerRepo } from './github';
 
+const width = 400;
+const height = 400;
+
 const renderChart = (rawData: LanguagesPerRepo): void => {
   const total = Object.values(rawData).reduce(
     (total, value) => total + value,
     0,
   );
 
-  interface LanguageDatum {
-    name: string;
-    value: number;
-  }
-
   const data = Object.entries(rawData).map(([key, value]) => ({
     name: key,
     value: ((value * 100) / total).toFixed(2), // percent
   }));
-
-  const width = 400;
-  const height = 400;
-
-  // const colors = [
-  //   '#081d58',
-  //   '#253494',
-  //   '#225ea8',
-  //   '#1d91c0',
-  //   '#41b6c4',
-  //   '#7fcdbb',
-  //   '#c7e9b4',
-  //   '#edf8b1',
-  //   '#ffffd9',
-  // ];
 
   const color = d3
     .scaleOrdinal()
@@ -98,7 +81,6 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
         ),
     )
     .on('mouseout', (d) => d3.selectAll('g.text > text').remove())
-
     // @ts-expect-error
     .attr('fill', (d) => color(d.data.name))
     // @ts-expect-error
@@ -107,37 +89,12 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
     // @ts-expect-error
     .text((d) => `${d.data.name}: ${d.data.value.toLocaleString()}`);
 
-  // TODO: use mouseover and mouseout to render legend https://github.com/pataruco/github-api-d3-lab/blob/master/scripts/main.js#L196
   svg
     .append('g')
     .attr('font-family', 'sans-serif')
     .attr('font-size', 10)
     .attr('text-anchor', 'middle')
     .attr('class', 'text');
-  // .selectAll('text')
-  // .data(arcs)
-  // .join('text')
-  // // @ts-expect-error
-  // .attr('transform', (d) => `translate(${arcLabel().centroid(d)})`)
-  // .call((text) =>
-  //   text
-  //     .append('tspan')
-  //     .attr('x', '0')
-  //     .attr('y', '-0.4em')
-  //     .attr('font-weight', 'bold')
-  //     // @ts-expect-error
-  //     .text((d) => d.data.name),
-  // )
-  // .call((text) =>
-  //   text
-  //     .filter((d) => d.endAngle - d.startAngle > 0.25)
-  //     .append('tspan')
-  //     .attr('x', 0)
-  //     .attr('y', '0.7em')
-  //     .attr('fill-opacity', 0.7)
-  //     // @ts-expect-error
-  //     .text((d) => `${d.data.value.toLocaleString()}%`),
-  // );
 };
 
 export default renderChart;
