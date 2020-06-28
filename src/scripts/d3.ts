@@ -72,6 +72,33 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
     .selectAll('path')
     .data(arcs)
     .join('path')
+    .on('mouseover', (d) =>
+      d3
+        .selectAll('g.text')
+        .append('text')
+        // @ts-expect-error
+        .attr('transform', `translate(${arcLabel().centroid(d)})`)
+        .call((text) =>
+          text
+            .append('tspan')
+            .attr('x', '0')
+            .attr('y', '-0.4em')
+            .attr('font-weight', 'bold')
+            // @ts-expect-error
+            .text(d.data.name),
+        )
+        .call((text) =>
+          text
+            .append('tspan')
+            .attr('x', 0)
+            .attr('y', '0.7em')
+            .attr('fill-opacity', 0.7)
+            // @ts-expect-error
+            .text(`${d.data.value.toLocaleString()}%`),
+        ),
+    )
+    .on('mouseout', (d) => d3.selectAll('g.text > text').remove())
+
     // @ts-expect-error
     .attr('fill', (d) => color(d.data.name))
     // @ts-expect-error
@@ -86,30 +113,31 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
     .attr('font-family', 'sans-serif')
     .attr('font-size', 10)
     .attr('text-anchor', 'middle')
-    .selectAll('text')
-    .data(arcs)
-    .join('text')
-    // @ts-expect-error
-    .attr('transform', (d) => `translate(${arcLabel().centroid(d)})`)
-    .call((text) =>
-      text
-        .append('tspan')
-        .attr('x', '0')
-        .attr('y', '-0.4em')
-        .attr('font-weight', 'bold')
-        // @ts-expect-error
-        .text((d) => d.data.name),
-    )
-    .call((text) =>
-      text
-        .filter((d) => d.endAngle - d.startAngle > 0.25)
-        .append('tspan')
-        .attr('x', 0)
-        .attr('y', '0.7em')
-        .attr('fill-opacity', 0.7)
-        // @ts-expect-error
-        .text((d) => `${d.data.value.toLocaleString()}%`),
-    );
+    .attr('class', 'text');
+  // .selectAll('text')
+  // .data(arcs)
+  // .join('text')
+  // // @ts-expect-error
+  // .attr('transform', (d) => `translate(${arcLabel().centroid(d)})`)
+  // .call((text) =>
+  //   text
+  //     .append('tspan')
+  //     .attr('x', '0')
+  //     .attr('y', '-0.4em')
+  //     .attr('font-weight', 'bold')
+  //     // @ts-expect-error
+  //     .text((d) => d.data.name),
+  // )
+  // .call((text) =>
+  //   text
+  //     .filter((d) => d.endAngle - d.startAngle > 0.25)
+  //     .append('tspan')
+  //     .attr('x', 0)
+  //     .attr('y', '0.7em')
+  //     .attr('fill-opacity', 0.7)
+  //     // @ts-expect-error
+  //     .text((d) => `${d.data.value.toLocaleString()}%`),
+  // );
 };
 
 export default renderChart;
