@@ -17,59 +17,104 @@ const rawData = {
 
 const total = Object.values(rawData).reduce((total, value) => total + value, 0);
 
+interface LanguageDatum {
+  name: string;
+  value: number;
+}
+
 const data = Object.entries(rawData).map(([key, value]) => ({
   name: key,
   value,
 }));
-console.log(data);
 
 const width = 400;
 const height = 400;
-const radius = 180;
-const innerRadius = 70;
+
+const colors = [
+  '#081d58',
+  '#253494',
+  '#225ea8',
+  '#1d91c0',
+  '#41b6c4',
+  '#7fcdbb',
+  '#c7e9b4',
+  '#edf8b1',
+  '#ffffd9',
+];
 
 const color = d3
   .scaleOrdinal()
-  .range([
-    '#081d58',
-    '#253494',
-    '#225ea8',
-    '#1d91c0',
-    '#41b6c4',
-    '#7fcdbb',
-    '#c7e9b4',
-    '#edf8b1',
-    '#ffffd9',
-  ]);
+  .domain(data.map((d) => d.name))
+  .range(
+    d3
+      .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
+      .reverse(),
+  );
 
-const vis = d3
-  .select('#chart')
-  .append('svg:svg')
-  .data([data])
-  .attr('width', width)
-  .attr('height', height)
-  .append('svg:g')
-  .attr('transform', `translate(${radius * 1.1}, ${radius * 1.1})`);
-
-const textTop = vis
-  .append('text')
-  .attr('dy', '.35em')
-  .style('text-anchor', 'middle')
-  .attr('class', 'textTop')
-  .attr('y', -10);
-
-const textBottom = vis
-  .append('text')
-  .attr('dy', '.35em')
-  .style('text-anchor', 'middle')
-  .attr('class', 'textBottom')
-  .attr('y', 10);
-
-const arc = d3.arc().innerRadius(innerRadius).outerRadius(radius);
-
-const arcOver = d3
+const arc = d3
   .arc()
-  .innerRadius(innerRadius + 10)
-  .outerRadius(radius + 10);
+  .innerRadius(0)
+  .outerRadius(Math.min(width, height) / 2 - 1);
 
-const pie = d3.pie().value();
+const arcLabel = () => {
+  const radius = (Math.min(width, height) / 2) * 0.8;
+  return d3.arc().innerRadius(radius).outerRadius(radius);
+};
+
+const pie = d3
+  .pie()
+  .sort(null)
+  // @ts-expect-error
+  .value((d) => d.value);
+
+// @ts-expect-error
+const arcs = pie(data);
+
+const svg = d3
+  .select('#js-d3-chart')
+  .append('svg:svg')
+  .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`);
+
+// @ts-expect-error
+svg
+  .append('g')
+  .attr('stroke', 'white')
+  .selectAll('path')
+  .data(arcs)
+  .join('path')
+  // @ts-expect-error
+  .attr('fill', (d) => color(d.data.name))
+  // @ts-expect-error
+  .attr('d', arc)
+  .append('title')
+  // @ts-expect-error
+  .text((d) => `${d.data.name}: ${d.data.value.toLocaleString()}`);
+
+svg
+  .append('g')
+  .attr('font-family', 'sans-serif')
+  .attr('font-size', 12)
+  .attr('text-anchor', 'middle')
+  .selectAll('text')
+  .data(arcs)
+  .join('text')
+  // @ts-expect-error
+  .attr('transform', (d) => `translate(${arcLabel().centroid(d)})`)
+  .call((text) =>
+    text
+      .append('tspan')
+      .attr('y', '-0.4em')
+      .attr('font-weight', 'bold')
+      // @ts-expect-error
+      .text((d) => d.data.name),
+  )
+  .call((text) =>
+    text
+      .filter((d) => d.endAngle - d.startAngle > 0.25)
+      .append('tspan')
+      .attr('x', 0)
+      .attr('y', '0.7em')
+      .attr('fill-opacity', 0.7)
+      // @ts-expect-error
+      .text((d) => d.data.value.toLocaleString()),
+  );
