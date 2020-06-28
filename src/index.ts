@@ -2,9 +2,9 @@
 import 'normalize.css';
 import './styles/index.css';
 // JS
-import './scripts/d3';
 import { getByUsername, getAllLanguagesSumByUser } from './scripts/github';
 import renderLanguagesGraph from './scripts/d3';
+import renderUserInfo from './scripts/user';
 
 // Elements
 const form = document.querySelector('form');
@@ -15,7 +15,7 @@ const getInfo = async (username: string) => {
   try {
     const ghUser = await getByUsername(username);
     console.log({ ghUser });
-    // TODO: renderUserInfo(ghUser);
+    renderUserInfo(ghUser);
     const allLanguages = await getAllLanguagesSumByUser(username);
     renderLanguagesGraph(allLanguages);
   } catch (error) {

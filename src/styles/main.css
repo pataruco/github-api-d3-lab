@@ -29,5 +29,9 @@ svg {
 }
 
 .result {
-  /* display: none; */
+  display: flex;
+}
+
+.result > * {
+  max-width: 50%;
 }

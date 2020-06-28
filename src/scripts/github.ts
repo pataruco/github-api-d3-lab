@@ -43,7 +43,7 @@ export const octokit = async () =>
     },
   });
 
-type User = RestEndpointMethodTypes['users']['getByUsername']['response']['data'];
+export type User = RestEndpointMethodTypes['users']['getByUsername']['response']['data'];
 
 export const getByUsername = async (username: string): Promise<User> => {
   try {
