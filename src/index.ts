@@ -28,7 +28,9 @@ const getUsernameFromfrom = async (event: Event) => {
   event.preventDefault();
   const username = (form?.querySelector(
     'input[type="text"]',
-  ) as HTMLInputElement)?.value;
+  ) as HTMLInputElement)?.value
+    .toLocaleLowerCase()
+    .trim();
 
   getInfo(username);
 };

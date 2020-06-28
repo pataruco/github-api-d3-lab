@@ -80,6 +80,7 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
     // @ts-expect-error
     .text((d) => `${d.data.name}: ${d.data.value.toLocaleString()}`);
 
+  // TODO: use mouseover and mouseout to render legend https://github.com/pataruco/github-api-d3-lab/blob/master/scripts/main.js#L196
   svg
     .append('g')
     .attr('font-family', 'sans-serif')
