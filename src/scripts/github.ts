@@ -46,10 +46,15 @@ export const octokit = async () =>
 type User = RestEndpointMethodTypes['users']['getByUsername']['response']['data'];
 
 export const getByUsername = async (username: string): Promise<User> => {
-  const { data } = await (await octokit()).users.getByUsername({
-    username,
-  });
-  return data;
+  try {
+    const { data } = await (await octokit()).users.getByUsername({
+      username,
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Error get user from GitHub: ${error}.`);
+  }
 };
 
 type Repo = RestEndpointMethodTypes['repos']['get']['response']['data'];
@@ -67,7 +72,7 @@ export const getReposByUsername = async (
   return result.filter((repo) => !repo.fork).map((repo) => repo.name);
 };
 
-type LanguagesPerRepo = RestEndpointMethodTypes['repos']['listLanguages']['response']['data'];
+export type LanguagesPerRepo = RestEndpointMethodTypes['repos']['listLanguages']['response']['data'];
 
 export const getLanguagesByUserAndRepo = async (
   owner: string,

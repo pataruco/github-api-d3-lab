@@ -18,23 +18,6 @@
     </header>
 
     <main>
-      <section class="landing">
-        <form action="/">
-          <label for="username">
-            Enter GitHub username
-          </label>
-          <input
-            type="text"
-            id="username"
-            required
-            aria-required="true"
-            name="username"
-            pattern="^@[a-zA-Z]*"
-            title="GitHub username starts with @"
-          />
-          <button type="submit">Enter</button>
-        </form>
-      </section>
       <section class="spinner">
         <picture>
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -52,8 +35,32 @@
         </picture>
       </section>
       <section class="result">
+        <div class="gh-profile">
+          <picture>
+            <img src="" alt="" />
+          </picture>
+          <p class="name"></p>
+          <p class="username"></p>
+        </div>
         <figure id="js-d3-chart"></figure>
       </section>
     </main>
+    <section class="form">
+      <form action="/">
+        <label for="username">
+          GitHub username
+        </label>
+        <input
+          type="text"
+          id="username"
+          required
+          aria-required="true"
+          name="username"
+          pattern="^[a-zA-Z]*"
+          title="GitHub username"
+        />
+        <button type="submit">Enter</button>
+      </form>
+    </section>
   </body>
 </html>
