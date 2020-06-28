@@ -55,9 +55,8 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
     .selectAll('path')
     .data(arcs)
     .join('path')
-    .on('mouseover', (d) =>
-      d3
-        .selectAll('g.text')
+    .on('mouseover', function (d) {
+      d3.selectAll('g.text')
         .append('text')
         // @ts-expect-error
         .attr('transform', `translate(${arcLabel().centroid(d)})`)
@@ -68,7 +67,9 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
             .attr('y', '-0.4em')
             .attr('font-weight', 'bold')
             // @ts-expect-error
-            .text(d.data.name),
+            .text(d.data.name)
+            .transition()
+            .duration(100),
         )
         .call((text) =>
           text
@@ -77,10 +78,20 @@ const renderChart = (rawData: LanguagesPerRepo): void => {
             .attr('y', '0.7em')
             .attr('fill-opacity', 0.7)
             // @ts-expect-error
-            .text(`${d.data.value.toLocaleString()}%`),
-        ),
-    )
-    .on('mouseout', (d) => d3.selectAll('g.text > text').remove())
+            .text(`${d.data.value.toLocaleString()}%`)
+            .transition()
+            .duration(100),
+        );
+
+      d3.select(this)
+        .transition()
+        .duration(100)
+        .attr('transform', 'scale(1.009)');
+    })
+    .on('mouseout', function () {
+      d3.selectAll('g.text > text').remove();
+      d3.select(this).transition().duration(100).attr('transform', 'scale(1)');
+    })
     // @ts-expect-error
     .attr('fill', (d) => color(d.data.name))
     // @ts-expect-error
