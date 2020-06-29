@@ -1,0 +1,30 @@
+.form {
+  min-height: 10vh;
+  padding: 1.25rem;
+}
+
+form {
+  display: flex;
+}
+
+label {
+  font-size: 1.75rem;
+}
+
+input {
+  margin: 0 1rem;
+  border: 2px solid;
+  padding: 0 0.25rem;
+}
+
+button {
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+}
+
+button:active {
+  border: 2px solid black;
+  color: black;
+  background-color: white;
+}

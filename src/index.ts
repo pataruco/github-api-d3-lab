@@ -1,20 +1,39 @@
 // CSS
 import 'normalize.css';
-import './styles/main.css';
+import './styles/index.css';
 // JS
+import { getByUsername, getAllLanguagesSumByUser } from './scripts/github';
+import renderLanguagesGraph from './scripts/d3';
+import renderUserInfo from './scripts/user';
 
-import './scripts/form';
-import './scripts/d3';
+// Elements
+const form = document.querySelector('form');
 
-import {
-  getByUsername,
-  getReposByUsername,
-  getLanguagesByUserAndRepo,
-  getToken,
-  getAllLanguagesByUser,
-  getAllLanguagesSumByUser,
-} from './scripts/github';
+// Execution
 
-// const languages = getAllLanguagesSumByUser('pataruco');
+const getInfo = async (username: string) => {
+  try {
+    const ghUser = await getByUsername(username);
+    console.log({ ghUser });
+    renderUserInfo(ghUser);
+    const allLanguages = await getAllLanguagesSumByUser(username);
+    renderLanguagesGraph(allLanguages);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
-// languages.then((data) => console.log({ data }));
+const getUsernameFromfrom = async (event: Event) => {
+  event.preventDefault();
+  const username = (form?.querySelector(
+    'input[type="text"]',
+  ) as HTMLInputElement)?.value
+    .toLocaleLowerCase()
+    .trim();
+
+  getInfo(username);
+};
+
+// Events
+form?.addEventListener('submit', getUsernameFromfrom);
